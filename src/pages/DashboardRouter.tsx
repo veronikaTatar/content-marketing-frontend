@@ -2,9 +2,9 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import type { RootState } from '../store';
-import AdminDashboard from './dashboard/AdminDashboard';
-import ManagerDashboard from './dashboard/ManagerDashboard';
-import AuthorDashboard from './dashboard/AuthorDashboard';
+import MenuAdmin from './admin/MenuAdmin';
+import MenuManager from './manager/MenuManager';
+import MenuAuthor from './author/MenuAuthor';
 
 const DashboardRouter = () => {
     const { user, token } = useSelector((state: RootState) => state.auth);
@@ -16,13 +16,13 @@ const DashboardRouter = () => {
     // Роутинг на основе роли
     switch (user.role) {
         case 'ADMIN':
-            return <AdminDashboard />;
+            return <MenuAdmin />;
         case 'CONTENT_MANAGER':
-            return <ManagerDashboard />;
+            return <MenuManager />;
         case 'AUTHOR':
-            return <AuthorDashboard />;
+            return <MenuAuthor />;
         default:
-            return <AuthorDashboard />;
+            return <MenuAuthor />;
     }
 };
 

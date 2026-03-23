@@ -8,6 +8,7 @@ interface AuthState {
     refreshToken: string | null;
     isLoading: boolean;
     error: string | null;
+
 }
 
 const getStoredUser = (): User | null => {
@@ -164,6 +165,21 @@ const authSlice = createSlice({
                 state.user = null;
                 state.token = null;
                 state.refreshToken = null;
+
+                // Детальная обработка ошибок
+                const errorMessage = action.error.message || 'Login failed';
+
+                if (errorMessage.includes('User not found')) {
+                    state.error = 'Пользователь не найден. Проверьте логин или email.';
+                } else if (errorMessage.includes('Invalid password')) {
+                    state.error = 'Неверный пароль. Попробуйте еще раз.';
+                } else if (errorMessage.includes('blocked')) {
+                    state.error = 'Ваш аккаунт заблокирован. Обратитесь к администратору.';
+                } else if (errorMessage.includes('Network Error')) {
+                    state.error = 'Ошибка сети. Убедитесь, что сервер запущен.';
+                } else {
+                    state.error = errorMessage;
+                }
             })
             .addCase(register.pending, (state) => {
                 state.isLoading = true;
@@ -212,5 +228,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout, /*clearError,*/ setTokensFromUrl,/* clearStorage*/ } = authSlice.actions;
+// store/slices/authSlice.ts - в конце файла
+export const { logout, clearError, setTokensFromUrl, clearStorage } = authSlice.actions;
 export default authSlice.reducer;

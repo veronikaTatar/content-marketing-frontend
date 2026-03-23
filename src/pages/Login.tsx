@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { login } from '../store/slices/authSlice';
+import { login, clearError } from '../store/slices/authSlice';
 import { GitHubLoginButton } from '../components/auth/GitHubLoginButton';
 import type { AppDispatch, RootState } from '../store';
 
@@ -21,6 +21,10 @@ const Login = () => {
             ...credentials,
             [e.target.name]: e.target.value,
         });
+        // Очищаем ошибку при вводе
+        if (error) {
+            dispatch(clearError());
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -93,7 +97,6 @@ const Login = () => {
                     </div>
                 </form>
 
-                {/* ✅ ДОБАВИТЬ: GitHub кнопку */}
                 <div className="mt-6">
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
