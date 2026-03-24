@@ -40,6 +40,7 @@ const authSlice = createSlice({
             state.user = null;
             state.token = null;
             localStorage.removeItem('token');
+            localStorage.removeItem('refreshToken');
             localStorage.removeItem('user');
         },
     },
@@ -51,20 +52,32 @@ const authSlice = createSlice({
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload.user;
-                state.token = action.payload.token;
-                localStorage.setItem('token', action.payload.token);
-                localStorage.setItem('user', JSON.stringify(action.payload.user));
+                const user: User = {
+                    email: action.payload.email,
+                    fullName: action.payload.fullName,
+                    role: action.payload.role,
+                };
+                state.user = user;
+                state.token = action.payload.accessToken;
+                localStorage.setItem('token', action.payload.accessToken);
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('refreshToken', action.payload.refreshToken);
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error.message || 'Login failed';
             })
             .addCase(register.fulfilled, (state, action) => {
-                state.user = action.payload.user;
-                state.token = action.payload.token;
-                localStorage.setItem('token', action.payload.token);
-                localStorage.setItem('user', JSON.stringify(action.payload.user));
+                const user: User = {
+                    email: action.payload.email,
+                    fullName: action.payload.fullName,
+                    role: action.payload.role,
+                };
+                state.user = user;
+                state.token = action.payload.accessToken;
+                localStorage.setItem('token', action.payload.accessToken);
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('refreshToken', action.payload.refreshToken);
             });
     },
 });
