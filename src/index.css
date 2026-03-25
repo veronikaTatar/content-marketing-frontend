@@ -29,7 +29,7 @@ a {
     text-decoration: none;
 }
 
-button, input, select {
+button, input, select, textarea {
     font-family: inherit;
 }
 
@@ -337,12 +337,18 @@ button, input, select {
 }
 
 .form-grid input,
-.form-grid select {
+.form-grid select,
+.form-grid textarea {
     background: var(--panel-soft);
     border: 1px solid var(--border);
     color: var(--text);
     padding: 10px 12px;
     border-radius: 10px;
+}
+
+.form-grid textarea {
+    grid-column: 1 / -1;
+    resize: vertical;
 }
 
 .auth-shell {

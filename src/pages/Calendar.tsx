@@ -1,18 +1,66 @@
 ﻿import { useEffect, useState } from 'react';
 import { publicationsApi } from '../api/publications';
-import type { Publication } from '../types';
+import { contentApi } from '../api/content';
+import { channelsApi } from '../api/channels';
+import type { Publication, Content, Channel } from '../types';
 
 const Calendar = () => {
     const [items, setItems] = useState<Publication[]>([]);
+    const [contents, setContents] = useState<Content[]>([]);
+    const [channels, setChannels] = useState<Channel[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [form, setForm] = useState({
+        idContent: '',
+        idChannel: '',
+        scheduledAt: '',
+    });
 
-    useEffect(() => {
+    const load = () => {
         const from = new Date();
         const to = new Date();
         to.setDate(to.getDate() + 14);
+        setError(null);
         publicationsApi.calendar(from.toISOString(), to.toISOString())
             .then((res) => setItems(res.data.content))
-            .catch(() => setItems([]));
+            .catch((err) => {
+                setItems([]);
+                setError(err?.response?.data?.message || 'Failed to load calendar');
+            });
+    };
+
+    useEffect(() => {
+        load();
+        contentApi.search('')
+            .then((res) => setContents(res.data.content))
+            .catch(() => setContents([]));
+        channelsApi.list()
+            .then((res) => setChannels(res.data.content))
+            .catch(() => setChannels([]));
     }, []);
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSchedule = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setError(null);
+        try {
+            await publicationsApi.schedule({
+                idContent: Number(form.idContent),
+                idChannel: Number(form.idChannel),
+                scheduledAt: form.scheduledAt ? new Date(form.scheduledAt).toISOString() : null,
+            });
+            setForm({ idContent: '', idChannel: '', scheduledAt: '' });
+            load();
+        } catch (err: any) {
+            setError(err?.response?.data?.message || 'Failed to schedule publication');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className="page">
@@ -21,7 +69,37 @@ const Calendar = () => {
                     <h1>Publication Calendar</h1>
                     <p className="muted">Scheduled posts for the next two weeks.</p>
                 </div>
-                <button className="btn primary">Schedule Publication</button>
+            </div>
+
+            <div className="panel form-grid">
+                <form className="form-grid" onSubmit={handleSchedule}>
+                    <label>
+                        Content
+                        <select name="idContent" value={form.idContent} onChange={onChange} required>
+                            <option value="">Select content</option>
+                            {contents.map((c) => (
+                                <option key={c.idContent} value={c.idContent}>{c.title}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Channel
+                        <select name="idChannel" value={form.idChannel} onChange={onChange} required>
+                            <option value="">Select channel</option>
+                            {channels.map((ch) => (
+                                <option key={ch.idChannel} value={ch.idChannel}>{ch.name}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Schedule at
+                        <input name="scheduledAt" type="datetime-local" value={form.scheduledAt} onChange={onChange} />
+                    </label>
+                    <button className="btn primary" type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? 'Scheduling...' : 'Schedule Publication'}
+                    </button>
+                </form>
+                {error && <div className="error">{error}</div>}
             </div>
 
             <div className="panel">

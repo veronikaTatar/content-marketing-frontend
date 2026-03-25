@@ -4,11 +4,16 @@ import type { PublicationReport } from '../types';
 
 const Reports = () => {
     const [reports, setReports] = useState<PublicationReport[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        setError(null);
         reportsApi.publications()
             .then((res) => setReports(res.data.content))
-            .catch(() => setReports([]));
+            .catch((err) => {
+                setReports([]);
+                setError(err?.response?.data?.message || 'Failed to load report');
+            });
     }, []);
 
     return (
@@ -20,6 +25,8 @@ const Reports = () => {
                 </div>
                 <button className="btn ghost">Export CSV</button>
             </div>
+
+            {error && <div className="error">{error}</div>}
 
             <div className="panel">
                 <div className="table">

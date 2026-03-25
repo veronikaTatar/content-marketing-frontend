@@ -1,6 +1,9 @@
-import { NavLink } from 'react-router-dom';
+﻿import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
+
+const linkClass = ({ isActive }: { isActive: boolean }) =>
+    isActive ? 'nav-link active' : 'nav-link';
 
 const Sidebar = () => {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -17,21 +20,21 @@ const Sidebar = () => {
 
             <div className="nav-group">
                 <span className="nav-label">Workspace</span>
-                <NavLink to="/dashboard" className="nav-link">Dashboard</NavLink>
-                <NavLink to="/tasks" className="nav-link">Tasks</NavLink>
-                <NavLink to="/content" className="nav-link">Content</NavLink>
-                <NavLink to="/drafts" className="nav-link">Drafts</NavLink>
-                <NavLink to="/calendar" className="nav-link">Calendar</NavLink>
-                <NavLink to="/analytics" className="nav-link">Analytics</NavLink>
-                <NavLink to="/kpi" className="nav-link">KPI</NavLink>
-                <NavLink to="/reports" className="nav-link">Reports</NavLink>
+                <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
+                <NavLink to="/tasks" className={linkClass}>Tasks</NavLink>
+                <NavLink to="/content" className={linkClass}>Content</NavLink>
+                <NavLink to="/drafts" className={linkClass}>Drafts</NavLink>
+                <NavLink to="/calendar" className={linkClass}>Calendar</NavLink>
+                <NavLink to="/analytics" className={linkClass}>Analytics</NavLink>
+                <NavLink to="/kpi" className={linkClass}>KPI</NavLink>
+                <NavLink to="/reports" className={linkClass}>Reports</NavLink>
             </div>
 
             {user?.role === 'ADMIN' && (
                 <div className="nav-group">
                     <span className="nav-label">Admin</span>
-                    <NavLink to="/channels" className="nav-link">Channels</NavLink>
-                    <NavLink to="/users" className="nav-link">Users</NavLink>
+                    <NavLink to="/channels" className={linkClass}>Channels</NavLink>
+                    <NavLink to="/users" className={linkClass}>Users</NavLink>
                 </div>
             )}
         </aside>
