@@ -2,6 +2,15 @@
 import { tasksApi } from '../api/tasks';
 import type { Task } from '../types';
 
+const statusLabels: Record<string, string> = {
+    new: 'Новая',
+    in_progress: 'В работе',
+    review: 'На проверке',
+    completed: 'Завершена',
+};
+
+const getStatusLabel = (status: string) => statusLabels[status] || status;
+
 const Tasks = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [sortBy, setSortBy] = useState('priority');
@@ -97,10 +106,10 @@ const Tasks = () => {
                     <label>
                         Статус
                         <select name="status" value={form.status} onChange={onChange}>
-                            <option value="new">new</option>
-                            <option value="in_progress">in_progress</option>
-                            <option value="review">review</option>
-                            <option value="completed">completed</option>
+                            <option value="new">Новая</option>
+                            <option value="in_progress">В работе</option>
+                            <option value="review">На проверке</option>
+                            <option value="completed">Завершена</option>
                         </select>
                     </label>
                     <label>
@@ -133,7 +142,7 @@ const Tasks = () => {
                     {tasks.map((task) => (
                         <div key={task.idTask} className="table-row">
                             <span>{task.title}</span>
-                            <span className="badge muted">{task.status}</span>
+                            <span className="badge muted">{getStatusLabel(task.status)}</span>
                             <span>{task.priority}</span>
                             <span>{task.complexity}</span>
                         </div>

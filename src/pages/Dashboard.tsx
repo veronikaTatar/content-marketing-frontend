@@ -2,6 +2,15 @@
 import { tasksApi } from '../api/tasks';
 import type { Task } from '../types';
 
+const statusLabels: Record<string, string> = {
+    new: 'Новая',
+    in_progress: 'В работе',
+    review: 'На проверке',
+    completed: 'Завершена',
+};
+
+const getStatusLabel = (status: string) => statusLabels[status] || status;
+
 const Dashboard = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -57,7 +66,7 @@ const Dashboard = () => {
                                     <div className="list-title">{task.title}</div>
                                     <div className="muted">Приоритет {task.priority} · Сложность {task.complexity}</div>
                                 </div>
-                                <span className="badge">{task.status}</span>
+                                <span className="badge">{getStatusLabel(task.status)}</span>
                             </div>
                         ))}
                         {!tasks.length && <div className="muted">Задач пока нет.</div>}

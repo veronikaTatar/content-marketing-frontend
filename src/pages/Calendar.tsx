@@ -4,6 +4,16 @@ import { contentApi } from '../api/content';
 import { channelsApi } from '../api/channels';
 import type { Publication, Content, Channel } from '../types';
 
+const statusLabels: Record<string, string> = {
+    scheduled: 'Запланировано',
+    published: 'Опубликовано',
+    failed: 'Ошибка',
+    cancelled: 'Отменено',
+    draft: 'Черновик',
+};
+
+const getStatusLabel = (status: string) => statusLabels[status] || status;
+
 const Calendar = () => {
     const [items, setItems] = useState<Publication[]>([]);
     const [contents, setContents] = useState<Content[]>([]);
@@ -114,7 +124,7 @@ const Calendar = () => {
                         <div key={item.idPublication} className="table-row">
                             <span>#{item.idContent}</span>
                             <span>#{item.idChannel}</span>
-                            <span className="badge">{item.status}</span>
+                            <span className="badge">{getStatusLabel(item.status)}</span>
                             <span>{item.scheduledAt || '-'}</span>
                         </div>
                     ))}

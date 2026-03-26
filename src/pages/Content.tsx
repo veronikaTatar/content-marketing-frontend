@@ -2,6 +2,15 @@
 import { contentApi } from '../api/content';
 import type { Content } from '../types';
 
+const statusLabels: Record<string, string> = {
+    draft: 'Черновик',
+    review: 'На проверке',
+    approved: 'Одобрен',
+    rejected: 'Отклонён',
+};
+
+const getStatusLabel = (status: string) => statusLabels[status] || status;
+
 const ContentPage = () => {
     const [items, setItems] = useState<Content[]>([]);
     const [title, setTitle] = useState('');
@@ -81,10 +90,10 @@ const ContentPage = () => {
                     <label>
                         Статус
                         <select name="status" value={form.status} onChange={onChange}>
-                            <option value="draft">draft</option>
-                            <option value="review">review</option>
-                            <option value="approved">approved</option>
-                            <option value="rejected">rejected</option>
+                            <option value="draft">Черновик</option>
+                            <option value="review">На проверке</option>
+                            <option value="approved">Одобрен</option>
+                            <option value="rejected">Отклонён</option>
                         </select>
                     </label>
                     <label>
@@ -123,7 +132,7 @@ const ContentPage = () => {
                     {items.map((item) => (
                         <div key={item.idContent} className="table-row">
                             <span>{item.title}</span>
-                            <span className="badge">{item.status}</span>
+                            <span className="badge">{getStatusLabel(item.status)}</span>
                             <span>{item.tags.join(', ')}</span>
                         </div>
                     ))}
