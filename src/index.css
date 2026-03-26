@@ -198,6 +198,17 @@ button, input, select, textarea {
     border: none;
 }
 
+.btn.accent {
+    background: linear-gradient(135deg, var(--accent-2), var(--accent));
+    color: #0b0f15;
+    border: none;
+}
+
+.btn.inline {
+    width: fit-content;
+    justify-self: start;
+}
+
 .btn.ghost {
     background: transparent;
 }
