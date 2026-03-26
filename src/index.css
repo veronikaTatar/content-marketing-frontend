@@ -177,6 +177,8 @@ button, input, select, textarea {
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
+    row-gap: 10px;
 }
 
 .muted {
@@ -207,6 +209,12 @@ button, input, select, textarea {
 .btn.inline {
     width: fit-content;
     justify-self: start;
+}
+
+.btn.form-action {
+    height: 40px;
+    min-height: 40px;
+    align-self: end;
 }
 
 .btn.ghost {

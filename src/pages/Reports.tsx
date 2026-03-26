@@ -1,7 +1,9 @@
 ﻿import { useEffect, useState } from 'react';
 import { reportsApi } from '../api/reports';
 import { tasksApi } from '../api/tasks';
-import type { PublicationReport, Task } from '../types';
+import { contentApi } from '../api/content';
+import { publicationsApi } from '../api/publications';
+import type { PublicationReport, Task, Content, Publication } from '../types';
 
 const taskStatusLabels: Record<string, string> = {
     new: 'Новая',
@@ -47,6 +49,9 @@ ${bodyHtml}
 const Reports = () => {
     const [reports, setReports] = useState<PublicationReport[]>([]);
     const [approvedTasks, setApprovedTasks] = useState<Task[]>([]);
+    const [dashboardTasks, setDashboardTasks] = useState<Task[]>([]);
+    const [drafts, setDrafts] = useState<Content[]>([]);
+    const [scheduled, setScheduled] = useState<Publication[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -61,24 +66,51 @@ const Reports = () => {
         tasksApi.listMine()
             .then((res) => {
                 const tasks = res.data.content || [];
+                setDashboardTasks(tasks);
                 setApprovedTasks(tasks.filter((task) => task.status === 'approved'));
             })
-            .catch(() => setApprovedTasks([]));
+            .catch(() => {
+                setDashboardTasks([]);
+                setApprovedTasks([]);
+            });
+
+        contentApi.search('?status=draft')
+            .then((res) => setDrafts(res.data.content || []))
+            .catch(() => setDrafts([]));
+
+        publicationsApi.list()
+            .then((res) => {
+                const items = res.data.content || [];
+                setScheduled(items.filter((item) => item.status === 'scheduled'));
+            })
+            .catch(() => setScheduled([]));
     }, []);
 
     const exportDashboardPdf = () => {
-        const activeTasks = approvedTasks.length;
-        const drafts = 6;
-        const scheduled = 4;
-        const engagement = '+18%';
+        const activeTasks = dashboardTasks.filter((task) =>
+            ['new', 'in_progress', 'review'].includes(task.status)
+        ).length;
+        const draftCount = drafts.length;
+        const scheduledCount = scheduled.length;
+        const totals = reports.reduce(
+            (acc, r) => {
+                acc.views += r.views;
+                acc.engagement += r.likes + r.comments + r.reposts;
+                return acc;
+            },
+            { views: 0, engagement: 0 }
+        );
+        const engagementRate = totals.views > 0
+            ? `${Math.round((totals.engagement / totals.views) * 100)}%`
+            : '0%';
         const body = `
             <h1>Дашборд — ключевые показатели</h1>
             <div class="meta">Сформировано: ${new Date().toLocaleString('ru-RU')}</div>
             <div class="stats">
                 <div class="card"><div class="label">Активные задачи</div><div class="value">${activeTasks}</div></div>
-                <div class="card"><div class="label">Черновики</div><div class="value">${drafts}</div></div>
-                <div class="card"><div class="label">Запланировано</div><div class="value">${scheduled}</div></div>
-                <div class="card"><div class="label">Вовлечённость</div><div class="value">${engagement}</div></div>
+                <div class="card"><div class="label">Черновики</div><div class="value">${draftCount}</div></div>
+                <div class="card"><div class="label">Запланировано</div><div class="value">${scheduledCount}</div></div>
+                <div class="card"><div class="label">Вовлечённость</div><div class="value">${engagementRate}</div></div>
             </div>
         `;
         buildPrintWindow('Дашборд — PDF', body);

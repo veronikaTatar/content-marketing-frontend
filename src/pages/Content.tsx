@@ -108,7 +108,7 @@ const ContentPage = () => {
                         Текст
                         <textarea name="body" value={form.body} onChange={onChange} rows={4} />
                     </label>
-                    <button className="btn primary inline" type="submit" disabled={isSubmitting}>
+                    <button className="btn primary inline form-action" type="submit" disabled={isSubmitting}>
                         {isSubmitting ? 'Создаём...' : 'Создать контент'}
                     </button>
                 </form>
@@ -119,7 +119,7 @@ const ContentPage = () => {
                 <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название" />
                 <input value={status} onChange={(e) => setStatus(e.target.value)} placeholder="Статус" />
                 <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Теги: маркетинг, релиз" />
-                <button className="btn accent" onClick={search}>Найти</button>
+                <button className="btn accent form-action" onClick={search}>Найти</button>
             </div>
 
             <div className="panel">
