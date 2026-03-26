@@ -25,9 +25,13 @@ const Sidebar = () => {
                 <NavLink to="/content" className={linkClass}>Контент</NavLink>
                 <NavLink to="/drafts" className={linkClass}>Черновики</NavLink>
                 <NavLink to="/calendar" className={linkClass}>Календарь</NavLink>
-                <NavLink to="/analytics" className={linkClass}>Аналитика</NavLink>
-                <NavLink to="/kpi" className={linkClass}>KPI</NavLink>
-                <NavLink to="/reports" className={linkClass}>Отчёты</NavLink>
+                {user?.role === 'MANAGER' && (
+                    <>
+                        <NavLink to="/analytics" className={linkClass}>Аналитика</NavLink>
+                        <NavLink to="/kpi" className={linkClass}>KPI</NavLink>
+                        <NavLink to="/reports" className={linkClass}>Отчёты</NavLink>
+                    </>
+                )}
             </div>
 
             {user?.role === 'ADMIN' && (
