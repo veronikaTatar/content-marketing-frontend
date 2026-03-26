@@ -67,12 +67,17 @@ const Reports = () => {
             .then((res) => {
                 const tasks = res.data.content || [];
                 setDashboardTasks(tasks);
-                setApprovedTasks(tasks.filter((task) => task.status === 'approved'));
             })
             .catch(() => {
                 setDashboardTasks([]);
-                setApprovedTasks([]);
             });
+
+        tasksApi.list()
+            .then((res) => {
+                const tasks = res.data.content || [];
+                setApprovedTasks(tasks.filter((task) => task.status === 'approved'));
+            })
+            .catch(() => setApprovedTasks([]));
 
         contentApi.search('?status=draft')
             .then((res) => setDrafts(res.data.content || []))

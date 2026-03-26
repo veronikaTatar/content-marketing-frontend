@@ -171,6 +171,7 @@ button, input, select, textarea {
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+    flex-wrap: wrap;
 }
 
 .header-actions {
@@ -215,6 +216,8 @@ button, input, select, textarea {
     height: 40px;
     min-height: 40px;
     align-self: end;
+    justify-self: start;
+    width: auto;
 }
 
 .btn.ghost {
