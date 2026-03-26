@@ -36,11 +36,11 @@ const Register = () => {
         <div className="auth-shell">
             <div className="auth-card">
                 <div className="auth-brand">Content Marketing</div>
-                <h1>Create Account</h1>
-                <p className="muted">Set up a profile to start managing your content pipeline.</p>
+                <h1>Создать аккаунт</h1>
+                <p className="muted">Заполните профиль, чтобы начать управлять контентом.</p>
                 <form onSubmit={handleSubmit} className="auth-form">
                     <label>
-                        Full name
+                        ФИО
                         <input
                             type="text"
                             name="fullName"
@@ -50,7 +50,7 @@ const Register = () => {
                         />
                     </label>
                     <label>
-                        Login
+                        Логин
                         <input
                             type="text"
                             name="login"
@@ -70,7 +70,7 @@ const Register = () => {
                         />
                     </label>
                     <label>
-                        Password
+                        Пароль
                         <input
                             type="password"
                             name="password"
@@ -80,29 +80,29 @@ const Register = () => {
                         />
                     </label>
                     <label>
-                        Role
+                        Роль
                         <select name="role" value={formData.role} onChange={handleChange}>
-                            <option value="AUTHOR">Author</option>
-                            <option value="MANAGER">Manager</option>
-                            <option value="ADMIN">Admin</option>
+                            <option value="AUTHOR">Автор</option>
+                            <option value="MANAGER">Менеджер</option>
+                            <option value="ADMIN">Администратор</option>
                         </select>
                     </label>
                     {error && <div className="error">{error}</div>}
                     <button type="submit" className="btn primary" disabled={isLoading}>
-                        {isLoading ? 'Creating...' : 'Create account'}
+                        {isLoading ? 'Создание...' : 'Создать аккаунт'}
                     </button>
                 </form>
                 <div className="auth-footer">
-                    <span>Already have access?</span>
-                    <Link to="/login">Sign in</Link>
+                    <span>Уже есть доступ?</span>
+                    <Link to="/login">Войти</Link>
                 </div>
             </div>
             <div className="auth-visual">
                 <div className="orb" />
                 <div className="grid-lines" />
                 <div className="auth-copy">
-                    <h2>Structure the workflow.</h2>
-                    <p>Assign roles, manage channels, and approve content faster.</p>
+                    <h2>Организуйте процесс.</h2>
+                    <p>Назначайте роли, управляйте каналами и быстрее утверждайте контент.</p>
                 </div>
             </div>
         </div>

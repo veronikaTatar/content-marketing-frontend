@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+﻿import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { authApi } from '../../api/auth';
 import type { User, LoginCredentials, RegisterData } from '../../types';
 
@@ -65,7 +65,7 @@ const authSlice = createSlice({
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error.message || 'Login failed';
+                state.error = action.error.message || 'Ошибка входа';
             })
             .addCase(register.fulfilled, (state, action) => {
                 const user: User = {

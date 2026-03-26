@@ -13,28 +13,28 @@ const Sidebar = () => {
             <div className="brand">
                 <div className="brand-mark">CM</div>
                 <div>
-                    <div className="brand-title">Content Marketing</div>
-                    <div className="brand-subtitle">Control Hub</div>
+                    <div className="brand-title">Контент-маркетинг</div>
+                    <div className="brand-subtitle">Центр управления</div>
                 </div>
             </div>
 
             <div className="nav-group">
-                <span className="nav-label">Workspace</span>
-                <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
-                <NavLink to="/tasks" className={linkClass}>Tasks</NavLink>
-                <NavLink to="/content" className={linkClass}>Content</NavLink>
-                <NavLink to="/drafts" className={linkClass}>Drafts</NavLink>
-                <NavLink to="/calendar" className={linkClass}>Calendar</NavLink>
-                <NavLink to="/analytics" className={linkClass}>Analytics</NavLink>
+                <span className="nav-label">Рабочее пространство</span>
+                <NavLink to="/dashboard" className={linkClass}>Дашборд</NavLink>
+                <NavLink to="/tasks" className={linkClass}>Задачи</NavLink>
+                <NavLink to="/content" className={linkClass}>Контент</NavLink>
+                <NavLink to="/drafts" className={linkClass}>Черновики</NavLink>
+                <NavLink to="/calendar" className={linkClass}>Календарь</NavLink>
+                <NavLink to="/analytics" className={linkClass}>Аналитика</NavLink>
                 <NavLink to="/kpi" className={linkClass}>KPI</NavLink>
-                <NavLink to="/reports" className={linkClass}>Reports</NavLink>
+                <NavLink to="/reports" className={linkClass}>Отчёты</NavLink>
             </div>
 
             {user?.role === 'ADMIN' && (
                 <div className="nav-group">
-                    <span className="nav-label">Admin</span>
-                    <NavLink to="/channels" className={linkClass}>Channels</NavLink>
-                    <NavLink to="/users" className={linkClass}>Users</NavLink>
+                    <span className="nav-label">Администрирование</span>
+                    <NavLink to="/channels" className={linkClass}>Каналы</NavLink>
+                    <NavLink to="/users" className={linkClass}>Пользователи</NavLink>
                 </div>
             )}
         </aside>

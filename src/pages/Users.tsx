@@ -3,18 +3,18 @@
         <div className="page">
             <div className="page-header">
                 <div>
-                    <h1>Users</h1>
-                    <p className="muted">Manage roles and access.</p>
+                    <h1>Пользователи</h1>
+                    <p className="muted">Управление ролями и доступом.</p>
                 </div>
-                <button className="btn primary">Invite user</button>
+                <button className="btn primary">Пригласить пользователя</button>
             </div>
 
             <div className="panel">
                 <div className="table">
                     <div className="table-row table-head">
-                        <span>Name</span>
+                        <span>Имя</span>
                         <span>Email</span>
-                        <span>Role</span>
+                        <span>Роль</span>
                     </div>
                     <div className="table-row">
                         <span>Мария Сергеева</span>

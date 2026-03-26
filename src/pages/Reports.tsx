@@ -12,7 +12,7 @@ const Reports = () => {
             .then((res) => setReports(res.data.content))
             .catch((err) => {
                 setReports([]);
-                setError(err?.response?.data?.message || 'Failed to load report');
+                setError(err?.response?.data?.message || 'Не удалось загрузить отчёт');
             });
     }, []);
 
@@ -20,10 +20,10 @@ const Reports = () => {
         <div className="page">
             <div className="page-header">
                 <div>
-                    <h1>Publication Report</h1>
-                    <p className="muted">Performance of published posts.</p>
+                    <h1>Отчёт по публикациям</h1>
+                    <p className="muted">Эффективность опубликованных постов.</p>
                 </div>
-                <button className="btn ghost">Export CSV</button>
+                <button className="btn ghost">Экспорт CSV</button>
             </div>
 
             {error && <div className="error">{error}</div>}
@@ -31,10 +31,10 @@ const Reports = () => {
             <div className="panel">
                 <div className="table">
                     <div className="table-row table-head">
-                        <span>Content</span>
-                        <span>Channel</span>
-                        <span>Published</span>
-                        <span>Engagement</span>
+                        <span>Контент</span>
+                        <span>Канал</span>
+                        <span>Опубликовано</span>
+                        <span>Вовлечённость</span>
                     </div>
                     {reports.map((r) => (
                         <div key={r.idPublication} className="table-row">
@@ -44,7 +44,7 @@ const Reports = () => {
                             <span>{r.likes + r.comments + r.reposts} / {r.views}</span>
                         </div>
                     ))}
-                    {!reports.length && <div className="muted">No reports yet.</div>}
+                    {!reports.length && <div className="muted">Отчётов пока нет.</div>}
                 </div>
             </div>
         </div>

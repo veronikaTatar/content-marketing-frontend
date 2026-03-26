@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+﻿import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import type { RootState } from '../store';
 import { logout } from '../store/slices/authSlice';
@@ -15,16 +15,16 @@ const Topbar = () => {
 
     return (
         <header className="topbar">
-            <div className="topbar-title">Content Control Center</div>
+            <div className="topbar-title">Центр управления контентом</div>
             <div className="topbar-actions">
                 <div className="user-chip">
-                    <div className="user-avatar">{user?.fullName?.[0] || 'U'}</div>
+                    <div className="user-avatar">{user?.fullName?.[0] || 'П'}</div>
                     <div>
-                        <div className="user-name">{user?.fullName || 'User'}</div>
-                        <div className="user-role">{user?.role || 'ROLE'}</div>
+                        <div className="user-name">{user?.fullName || 'Пользователь'}</div>
+                        <div className="user-role">{user?.role || 'РОЛЬ'}</div>
                     </div>
                 </div>
-                <button className="btn ghost" onClick={handleLogout}>Logout</button>
+                <button className="btn ghost" onClick={handleLogout}>Выйти</button>
             </div>
         </header>
     );

@@ -30,7 +30,7 @@ const ContentPage = () => {
             .then((res) => setItems(res.data.content))
             .catch((err) => {
                 setItems([]);
-                setError(err?.response?.data?.message || 'Failed to load content');
+                setError(err?.response?.data?.message || 'Не удалось загрузить контент');
             });
     };
 
@@ -57,7 +57,7 @@ const ContentPage = () => {
             setForm({ title: '', body: '', status: 'draft', idTask: '', tags: '' });
             search();
         } catch (err: any) {
-            setError(err?.response?.data?.message || 'Failed to create content');
+            setError(err?.response?.data?.message || 'Не удалось создать контент');
         } finally {
             setIsSubmitting(false);
         }
@@ -67,19 +67,19 @@ const ContentPage = () => {
         <div className="page">
             <div className="page-header">
                 <div>
-                    <h1>Content Library</h1>
-                    <p className="muted">Search by title, status, or tags.</p>
+                    <h1>Библиотека контента</h1>
+                    <p className="muted">Поиск по названию, статусу или тегам.</p>
                 </div>
             </div>
 
             <div className="panel form-grid">
                 <form className="form-grid" onSubmit={handleCreate}>
                     <label>
-                        Title
+                        Название
                         <input name="title" value={form.title} onChange={onChange} required />
                     </label>
                     <label>
-                        Status
+                        Статус
                         <select name="status" value={form.status} onChange={onChange}>
                             <option value="draft">draft</option>
                             <option value="review">review</option>
@@ -88,37 +88,37 @@ const ContentPage = () => {
                         </select>
                     </label>
                     <label>
-                        Task ID (optional)
+                        ID задачи (необязательно)
                         <input name="idTask" value={form.idTask} onChange={onChange} />
                     </label>
                     <label>
-                        Tags (comma)
+                        Теги (через запятую)
                         <input name="tags" value={form.tags} onChange={onChange} />
                     </label>
                     <label>
-                        Body
+                        Текст
                         <textarea name="body" value={form.body} onChange={onChange} rows={4} />
                     </label>
                     <button className="btn primary" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Creating...' : 'Create Content'}
+                        {isSubmitting ? 'Создаём...' : 'Создать контент'}
                     </button>
                 </form>
                 {error && <div className="error">{error}</div>}
             </div>
 
             <div className="filters">
-                <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
-                <input value={status} onChange={(e) => setStatus(e.target.value)} placeholder="Status" />
-                <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Tags: marketing, release" />
-                <button className="btn ghost" onClick={search}>Search</button>
+                <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Название" />
+                <input value={status} onChange={(e) => setStatus(e.target.value)} placeholder="Статус" />
+                <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Теги: маркетинг, релиз" />
+                <button className="btn ghost" onClick={search}>Найти</button>
             </div>
 
             <div className="panel">
                 <div className="table">
                     <div className="table-row table-head">
-                        <span>Title</span>
-                        <span>Status</span>
-                        <span>Tags</span>
+                        <span>Название</span>
+                        <span>Статус</span>
+                        <span>Теги</span>
                     </div>
                     {items.map((item) => (
                         <div key={item.idContent} className="table-row">
@@ -127,7 +127,7 @@ const ContentPage = () => {
                             <span>{item.tags.join(', ')}</span>
                         </div>
                     ))}
-                    {!items.length && <div className="muted">No content found.</div>}
+                    {!items.length && <div className="muted">Контент не найден.</div>}
                 </div>
             </div>
         </div>

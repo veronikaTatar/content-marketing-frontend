@@ -14,7 +14,7 @@ const Channels = () => {
             .then((res) => setChannels(res.data.content))
             .catch((err) => {
                 setChannels([]);
-                setError(err?.response?.data?.message || 'Failed to load channels');
+                setError(err?.response?.data?.message || 'Не удалось загрузить каналы');
             });
     };
 
@@ -36,7 +36,7 @@ const Channels = () => {
             setForm({ name: '', platform: '', isActive: true });
             load();
         } catch (err: any) {
-            setError(err?.response?.data?.message || 'Failed to create channel');
+            setError(err?.response?.data?.message || 'Не удалось создать канал');
         } finally {
             setIsSubmitting(false);
         }
@@ -46,30 +46,30 @@ const Channels = () => {
         <div className="page">
             <div className="page-header">
                 <div>
-                    <h1>Channels</h1>
-                    <p className="muted">Manage publication channels.</p>
+                    <h1>Каналы</h1>
+                    <p className="muted">Управление каналами публикации.</p>
                 </div>
             </div>
 
             <div className="panel form-grid">
                 <form className="form-grid" onSubmit={handleCreate}>
                     <label>
-                        Name
+                        Название
                         <input name="name" value={form.name} onChange={onChange} required />
                     </label>
                     <label>
-                        Platform
+                        Платформа
                         <input name="platform" value={form.platform} onChange={onChange} required />
                     </label>
                     <label>
-                        Active
+                        Активен
                         <select name="isActive" value={String(form.isActive)} onChange={onChange}>
-                            <option value="true">Active</option>
-                            <option value="false">Paused</option>
+                            <option value="true">Активен</option>
+                            <option value="false">Пауза</option>
                         </select>
                     </label>
                     <button className="btn primary" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Saving...' : 'Add Channel'}
+                        {isSubmitting ? 'Сохраняем...' : 'Добавить канал'}
                     </button>
                 </form>
                 {error && <div className="error">{error}</div>}
@@ -78,18 +78,18 @@ const Channels = () => {
             <div className="panel">
                 <div className="table">
                     <div className="table-row table-head">
-                        <span>Name</span>
-                        <span>Platform</span>
-                        <span>Status</span>
+                        <span>Название</span>
+                        <span>Платформа</span>
+                        <span>Статус</span>
                     </div>
                     {channels.map((ch) => (
                         <div key={ch.idChannel} className="table-row">
                             <span>{ch.name}</span>
                             <span>{ch.platform}</span>
-                            <span className={`badge ${ch.isActive ? '' : 'muted'}`}>{ch.isActive ? 'Active' : 'Paused'}</span>
+                            <span className={`badge ${ch.isActive ? '' : 'muted'}`}>{ch.isActive ? 'Активен' : 'Пауза'}</span>
                         </div>
                     ))}
-                    {!channels.length && <div className="muted">No channels found.</div>}
+                    {!channels.length && <div className="muted">Каналы не найдены.</div>}
                 </div>
             </div>
         </div>

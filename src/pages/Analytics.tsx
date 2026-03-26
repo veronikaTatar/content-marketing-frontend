@@ -3,38 +3,38 @@
         <div className="page">
             <div className="page-header">
                 <div>
-                    <h1>Analytics</h1>
-                    <p className="muted">Track engagement and reach trends.</p>
+                    <h1>Аналитика</h1>
+                    <p className="muted">Отслеживайте вовлечённость и охват.</p>
                 </div>
-                <button className="btn ghost">Sync metrics</button>
+                <button className="btn ghost">Синхронизировать метрики</button>
             </div>
 
             <div className="stats-grid">
                 <div className="stat-card">
-                    <span className="stat-label">Views</span>
+                    <span className="stat-label">Просмотры</span>
                     <strong>124 400</strong>
-                    <span className="stat-foot">+12% this week</span>
+                    <span className="stat-foot">+12% за неделю</span>
                 </div>
                 <div className="stat-card">
-                    <span className="stat-label">Likes</span>
+                    <span className="stat-label">Лайки</span>
                     <strong>8 320</strong>
-                    <span className="stat-foot">+6% this week</span>
+                    <span className="stat-foot">+6% за неделю</span>
                 </div>
                 <div className="stat-card">
-                    <span className="stat-label">Reposts</span>
+                    <span className="stat-label">Репосты</span>
                     <strong>1 140</strong>
-                    <span className="stat-foot">+3% this week</span>
+                    <span className="stat-foot">+3% за неделю</span>
                 </div>
                 <div className="stat-card">
-                    <span className="stat-label">Comments</span>
+                    <span className="stat-label">Комментарии</span>
                     <strong>940</strong>
-                    <span className="stat-foot">Stable</span>
+                    <span className="stat-foot">Стабильно</span>
                 </div>
             </div>
 
             <div className="panel">
-                <h3>Insights</h3>
-                <p className="muted">Short-form content yields higher engagement on weekdays. Consider scheduling peak posts on Tue–Thu 10:00.</p>
+                <h3>Инсайты</h3>
+                <p className="muted">Короткие форматы дают больше вовлечённости в будни. Планируйте ключевые публикации на вт–чт в 10:00.</p>
             </div>
         </div>
     );

@@ -32,11 +32,11 @@ const Login = () => {
         <div className="auth-shell">
             <div className="auth-card">
                 <div className="auth-brand">Content Marketing</div>
-                <h1>Welcome Back</h1>
-                <p className="muted">Sign in to manage content, tasks and analytics.</p>
+                <h1>С возвращением</h1>
+                <p className="muted">Войдите, чтобы управлять контентом, задачами и аналитикой.</p>
                 <form onSubmit={handleSubmit} className="auth-form">
                     <label>
-                        Login or Email
+                        Логин или Email
                         <input
                             type="text"
                             name="loginOrEmail"
@@ -46,7 +46,7 @@ const Login = () => {
                         />
                     </label>
                     <label>
-                        Password
+                        Пароль
                         <input
                             type="password"
                             name="password"
@@ -57,20 +57,20 @@ const Login = () => {
                     </label>
                     {error && <div className="error">{error}</div>}
                     <button type="submit" className="btn primary" disabled={isLoading}>
-                        {isLoading ? 'Signing in...' : 'Sign In'}
+                        {isLoading ? 'Вход...' : 'Войти'}
                     </button>
                 </form>
                 <div className="auth-footer">
-                    <span>New here?</span>
-                    <Link to="/register">Create an account</Link>
+                    <span>Нет аккаунта?</span>
+                    <Link to="/register">Создать аккаунт</Link>
                 </div>
             </div>
             <div className="auth-visual">
                 <div className="orb" />
                 <div className="grid-lines" />
                 <div className="auth-copy">
-                    <h2>Plan. Publish. Measure.</h2>
-                    <p>One workspace for content planning, approvals, and performance.</p>
+                    <h2>Планируйте. Публикуйте. Измеряйте.</h2>
+                    <p>Единое пространство для планирования, согласования и аналитики.</p>
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@ const Calendar = () => {
             .then((res) => setItems(res.data.content))
             .catch((err) => {
                 setItems([]);
-                setError(err?.response?.data?.message || 'Failed to load calendar');
+                setError(err?.response?.data?.message || 'Не удалось загрузить календарь');
             });
     };
 
@@ -56,7 +56,7 @@ const Calendar = () => {
             setForm({ idContent: '', idChannel: '', scheduledAt: '' });
             load();
         } catch (err: any) {
-            setError(err?.response?.data?.message || 'Failed to schedule publication');
+            setError(err?.response?.data?.message || 'Не удалось запланировать публикацию');
         } finally {
             setIsSubmitting(false);
         }
@@ -66,37 +66,37 @@ const Calendar = () => {
         <div className="page">
             <div className="page-header">
                 <div>
-                    <h1>Publication Calendar</h1>
-                    <p className="muted">Scheduled posts for the next two weeks.</p>
+                    <h1>Календарь публикаций</h1>
+                    <p className="muted">Запланированные публикации на ближайшие две недели.</p>
                 </div>
             </div>
 
             <div className="panel form-grid">
                 <form className="form-grid" onSubmit={handleSchedule}>
                     <label>
-                        Content
+                        Контент
                         <select name="idContent" value={form.idContent} onChange={onChange} required>
-                            <option value="">Select content</option>
+                            <option value="">Выберите контент</option>
                             {contents.map((c) => (
                                 <option key={c.idContent} value={c.idContent}>{c.title}</option>
                             ))}
                         </select>
                     </label>
                     <label>
-                        Channel
+                        Канал
                         <select name="idChannel" value={form.idChannel} onChange={onChange} required>
-                            <option value="">Select channel</option>
+                            <option value="">Выберите канал</option>
                             {channels.map((ch) => (
                                 <option key={ch.idChannel} value={ch.idChannel}>{ch.name}</option>
                             ))}
                         </select>
                     </label>
                     <label>
-                        Schedule at
+                        Время публикации
                         <input name="scheduledAt" type="datetime-local" value={form.scheduledAt} onChange={onChange} />
                     </label>
                     <button className="btn primary" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Scheduling...' : 'Schedule Publication'}
+                        {isSubmitting ? 'Планируем...' : 'Запланировать публикацию'}
                     </button>
                 </form>
                 {error && <div className="error">{error}</div>}
@@ -105,10 +105,10 @@ const Calendar = () => {
             <div className="panel">
                 <div className="table">
                     <div className="table-row table-head">
-                        <span>Content</span>
-                        <span>Channel</span>
-                        <span>Status</span>
-                        <span>Scheduled</span>
+                        <span>Контент</span>
+                        <span>Канал</span>
+                        <span>Статус</span>
+                        <span>Запланировано</span>
                     </div>
                     {items.map((item) => (
                         <div key={item.idPublication} className="table-row">
@@ -118,7 +118,7 @@ const Calendar = () => {
                             <span>{item.scheduledAt || '-'}</span>
                         </div>
                     ))}
-                    {!items.length && <div className="muted">No scheduled items.</div>}
+                    {!items.length && <div className="muted">Нет запланированных публикаций.</div>}
                 </div>
             </div>
         </div>

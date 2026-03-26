@@ -23,7 +23,7 @@ const Tasks = () => {
             .then((res) => setTasks(res.data.content))
             .catch((err) => {
                 setTasks([]);
-                setError(err?.response?.data?.message || 'Failed to load tasks');
+                setError(err?.response?.data?.message || 'Не удалось загрузить задачи');
             });
     };
 
@@ -59,7 +59,7 @@ const Tasks = () => {
             });
             load();
         } catch (err: any) {
-            setError(err?.response?.data?.message || 'Failed to create task');
+            setError(err?.response?.data?.message || 'Не удалось создать задачу');
         } finally {
             setIsSubmitting(false);
         }
@@ -69,17 +69,17 @@ const Tasks = () => {
         <div className="page">
             <div className="page-header">
                 <div>
-                    <h1>Tasks</h1>
-                    <p className="muted">Sort by priority or complexity.</p>
+                    <h1>Задачи</h1>
+                    <p className="muted">Сортировка по приоритету или сложности.</p>
                 </div>
                 <div className="header-actions">
                     <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                        <option value="priority">Priority</option>
-                        <option value="complexity">Complexity</option>
+                        <option value="priority">Приоритет</option>
+                        <option value="complexity">Сложность</option>
                     </select>
                     <select value={sortDir} onChange={(e) => setSortDir(e.target.value)}>
-                        <option value="asc">Asc</option>
-                        <option value="desc">Desc</option>
+                        <option value="asc">По возрастанию</option>
+                        <option value="desc">По убыванию</option>
                     </select>
                 </div>
             </div>
@@ -87,15 +87,15 @@ const Tasks = () => {
             <div className="panel form-grid">
                 <form className="form-grid" onSubmit={handleCreate}>
                     <label>
-                        Title
+                        Название
                         <input name="title" value={form.title} onChange={onChange} required />
                     </label>
                     <label>
-                        Brief
+                        Описание (кратко)
                         <input name="brief" value={form.brief} onChange={onChange} />
                     </label>
                     <label>
-                        Status
+                        Статус
                         <select name="status" value={form.status} onChange={onChange}>
                             <option value="new">new</option>
                             <option value="in_progress">in_progress</option>
@@ -104,19 +104,19 @@ const Tasks = () => {
                         </select>
                     </label>
                     <label>
-                        Priority
+                        Приоритет
                         <input name="priority" type="number" min={1} max={5} value={form.priority} onChange={onChange} />
                     </label>
                     <label>
-                        Complexity
+                        Сложность
                         <input name="complexity" type="number" min={1} max={5} value={form.complexity} onChange={onChange} />
                     </label>
                     <label>
-                        Deadline
+                        Срок
                         <input name="deadlineAt" type="datetime-local" value={form.deadlineAt} onChange={onChange} />
                     </label>
                     <button className="btn primary" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Creating...' : 'Create Task'}
+                        {isSubmitting ? 'Создаём...' : 'Создать задачу'}
                     </button>
                 </form>
                 {error && <div className="error">{error}</div>}
@@ -125,10 +125,10 @@ const Tasks = () => {
             <div className="panel">
                 <div className="table">
                     <div className="table-row table-head">
-                        <span>Title</span>
-                        <span>Status</span>
-                        <span>Priority</span>
-                        <span>Complexity</span>
+                        <span>Название</span>
+                        <span>Статус</span>
+                        <span>Приоритет</span>
+                        <span>Сложность</span>
                     </div>
                     {tasks.map((task) => (
                         <div key={task.idTask} className="table-row">
@@ -138,7 +138,7 @@ const Tasks = () => {
                             <span>{task.complexity}</span>
                         </div>
                     ))}
-                    {!tasks.length && <div className="muted">No tasks loaded.</div>}
+                    {!tasks.length && <div className="muted">Нет задач.</div>}
                 </div>
             </div>
         </div>
