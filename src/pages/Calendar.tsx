@@ -2,6 +2,7 @@
 import { publicationsApi } from '../api/publications';
 import { contentApi } from '../api/content';
 import { channelsApi } from '../api/channels';
+import { integrationsApi } from '../api/integrations';
 import type { Publication, Content, Channel } from '../types';
 
 const statusLabels: Record<string, string> = {
@@ -19,12 +20,17 @@ const Calendar = () => {
     const [contents, setContents] = useState<Content[]>([]);
     const [channels, setChannels] = useState<Channel[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [syncMessage, setSyncMessage] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
     const [form, setForm] = useState({
         idContent: '',
         idChannel: '',
         scheduledAt: '',
     });
+
+    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:8081/api';
+    const oauthUrl = apiBase.replace(/\/api$/, '') + '/oauth2/authorization/google';
 
     const load = () => {
         const from = new Date();
@@ -72,14 +78,39 @@ const Calendar = () => {
         }
     };
 
+    const handleSync = async () => {
+        setIsSyncing(true);
+        setSyncMessage(null);
+        try {
+            const res = await integrationsApi.syncGoogleCalendar();
+            const created = res.data?.createdCount ?? 0;
+            setSyncMessage(`Синхронизировано событий: ${created}`);
+        } catch (err: any) {
+            setSyncMessage(err?.response?.data?.message || 'Не удалось синхронизировать календарь');
+        } finally {
+            setIsSyncing(false);
+        }
+    };
+
     return (
         <div className="page">
             <div className="page-header">
                 <div>
                     <h1>Календарь публикаций</h1>
                     <p className="muted">Запланированные публикации на ближайшие две недели.</p>
+                    <p className="muted">Подключите Google Calendar под тем же email, что и в системе.</p>
+                </div>
+                <div className="header-actions">
+                    <a className="btn ghost" href={oauthUrl} target="_blank" rel="noreferrer">
+                        Подключить Google Calendar
+                    </a>
+                    <button className="btn accent" onClick={handleSync} disabled={isSyncing}>
+                        {isSyncing ? 'Синхронизация...' : 'Синхронизировать в Google'}
+                    </button>
                 </div>
             </div>
+
+            {syncMessage && <div className="muted">{syncMessage}</div>}
 
             <div className="panel form-grid">
                 <form className="form-grid" onSubmit={handleSchedule}>

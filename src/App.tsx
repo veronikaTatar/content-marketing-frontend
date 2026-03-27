@@ -11,6 +11,7 @@ import Analytics from './pages/Analytics';
 import KPI from './pages/KPI';
 import Drafts from './pages/Drafts';
 import Users from './pages/Users';
+import OAuth2Callback from './pages/OAuth2Callback';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 
@@ -19,6 +20,7 @@ function App() {
         <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/oauth2/callback" element={<OAuth2Callback />} />
             <Route
                 path="/dashboard"
                 element={
